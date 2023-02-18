@@ -16,5 +16,4 @@ jobs:
         with:
           path: __version__.py
           variable: __version__
-          github_token: ${{ secrets.GITHUB_TOKEN }}
           prefix: v
