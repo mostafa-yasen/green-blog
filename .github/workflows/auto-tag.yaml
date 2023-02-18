@@ -1,0 +1,20 @@
+name: Auto Version Tag
+
+on:
+  push:
+    branches: [feature/github-workflows]
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Version tag
+        uses: samamorgan/action-autotag-python@master
+
+        with:
+          path: __version__.py
+          variable: __version__
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prefix: v
