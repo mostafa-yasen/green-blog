@@ -21,3 +21,11 @@ repos:
       rev: 22.10.0
       hooks:
           - id: black
+
+    - repo: local
+      hooks:
+          - id: test-checks
+            name: test-checks
+            entry: bash -c 'python manage.py test'
+            language: system
+            always_run: true
