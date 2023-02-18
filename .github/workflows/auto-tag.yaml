@@ -2,7 +2,11 @@ name: Auto Version Tag
 
 on:
   push:
-    branches: [feature/github-workflows]
+    branches:
+      - main
+      - feature/github-workflows
+    paths:
+      - "__version__.py"
 
 jobs:
   tag:
@@ -11,9 +15,9 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Version tag
-        uses: samamorgan/action-autotag-python@master
+        uses: Jorricks/action-python-autotagging@1.0.1
 
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           path: __version__.py
           variable: __version__
-          prefix: v
