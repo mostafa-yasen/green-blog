@@ -19,6 +19,10 @@ jobs:
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
 
+      - name: Display File Structure
+        run: |
+          pwd
+
       - name: Run Tests
         run: |
           cd greenblog
