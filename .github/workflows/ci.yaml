@@ -26,5 +26,4 @@ jobs:
 
       - name: Run Tests
         run: |
-          cd greenblog
           python manage.py test
