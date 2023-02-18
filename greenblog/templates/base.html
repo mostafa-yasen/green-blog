@@ -12,7 +12,7 @@
   {% block header %}
   <ul>
     <li><a href="{% url 'login' %}">Login</a></li>
-    <li><a href="">Logout</a></li>
+    <li><a href="{% url 'logout' %}">Logout</a></li>
     <li><a href="{% url 'user_registration' %}">Register Account</a></ li>
   </ul>
   {% endblock %}
