@@ -1,0 +1,23 @@
+name: Auto Version Tag
+
+on:
+  push:
+    branches:
+      - main
+
+    paths:
+      - "__version__.py"
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Version tag
+        uses: Jorricks/action-python-autotagging@1.0.1
+
+        with:
+          token: ${{ secrets.AUTO_TAG_TOKEN }}
+          path: __version__.py
+          variable: __version__
