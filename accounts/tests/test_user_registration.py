@@ -3,7 +3,7 @@ from django.test import TestCase
 
 class TestUserRegistration(TestCase):
     def setUp(self) -> None:
-        self.response = self.client.get("/accounts/create")
+        self.response = self.client.get("/accounts/create/")
 
     def test_status_code_is_200(self) -> None:
         self.assertEqual(self.response.status_code, 200)
