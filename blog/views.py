@@ -1,12 +1,14 @@
 from django.http.response import HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse
 from django.utils.text import slugify
-from django.views.generic import CreateView
+from django.views.generic import CreateView, TemplateView
 
 from blog.forms import BlogForm
 from blog.models import Blog
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+
+from typing import Dict, Any
 
 
 class NewBlogView(CreateView):
@@ -29,3 +31,15 @@ class NewBlogView(CreateView):
             )
 
         return super(NewBlogView, self).dispatch(request, *args, **kwargs)
+
+
+class HomeView(TemplateView):
+    template_name = "home.html"
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        ctx = super(HomeView, self).get_context_data(**kwargs)
+
+        if self.request.user.is_authenticated:
+            ctx["has_blog"] = Blog.objects.filter(owner=self.request.user).exists()
+
+        return ctx
