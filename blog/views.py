@@ -1,10 +1,12 @@
+from django.forms import BaseModelForm
+from django.http import HttpResponse
 from django.http.response import HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse
 from django.utils.text import slugify
 from django.views.generic import CreateView, TemplateView, UpdateView
 
-from blog.forms import BlogForm
-from blog.models import Blog
+from blog.forms import BlogForm, BlogPostForm
+from blog.models import Blog, BlogPost
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
@@ -54,3 +56,17 @@ class UpdateBlogView(UpdateView):
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super(UpdateBlogView, self).dispatch(request, *args, **kwargs)
+
+
+class NewBlogPost(CreateView):
+    form_class = BlogPostForm
+    template_name = "blog_post.html"
+    success_url = "/"
+    model = BlogPost
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        blog_post = form.save(commit=False)
+        blog_post.blog = Blog.objects.get(owner=self.request.user)
+        blog_post.slug = slugify(blog_post.title)
+        blog_post.save()
+        return HttpResponseRedirect(reverse("home"))
