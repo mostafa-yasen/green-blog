@@ -11,6 +11,8 @@
 <body>
   {% block header %}
   <ul>
+    <li><a href="{% url 'home' %}">GreenBlog</a></li>
+
     {% if request.user.is_authenticated %}
 
     {% block logged_in_nav %}{% endblock %}
