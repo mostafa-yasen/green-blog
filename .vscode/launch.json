@@ -1,0 +1,17 @@
+{
+  "configurations": [
+    {
+      "args": [
+        "runserver",
+        "8888"
+      ],
+      "django": true,
+      "justMyCode": true,
+      "name": "Python: Django",
+      "program": "${workspaceFolder}/manage.py",
+      "request": "launch",
+      "type": "python"
+    }
+  ],
+  "version": "0.2.0"
+}
