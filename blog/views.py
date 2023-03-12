@@ -1,7 +1,7 @@
 from django.http.response import HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse
 from django.utils.text import slugify
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import CreateView, TemplateView, UpdateView
 
 from blog.forms import BlogForm
 from blog.models import Blog
@@ -43,3 +43,14 @@ class HomeView(TemplateView):
             ctx["has_blog"] = Blog.objects.filter(owner=self.request.user).exists()
 
         return ctx
+
+
+class UpdateBlogView(UpdateView):
+    form_class = BlogForm
+    template_name = "blog_settings.html"
+    success_url = "/"
+    model = Blog
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(UpdateBlogView, self).dispatch(request, *args, **kwargs)
