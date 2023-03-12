@@ -3,8 +3,8 @@ from django.urls import reverse
 from django.utils.text import slugify
 from django.views.generic import CreateView, TemplateView, UpdateView
 
-from blog.forms import BlogForm
-from blog.models import Blog
+from blog.forms import BlogForm, BlogPostForm
+from blog.models import Blog, BlogPost
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
@@ -54,3 +54,13 @@ class UpdateBlogView(UpdateView):
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super(UpdateBlogView, self).dispatch(request, *args, **kwargs)
+
+
+class NewBlogPost(CreateView):
+    form_class = BlogPostForm
+    template_name = "blog_post.html"
+    success_url = "/"
+    model = BlogPost
+
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
