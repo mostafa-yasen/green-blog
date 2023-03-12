@@ -38,10 +38,10 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         ctx = super(HomeView, self).get_context_data(**kwargs)
-
         if self.request.user.is_authenticated:
-            ctx["has_blog"] = Blog.objects.filter(owner=self.request.user).exists()
-
+            if Blog.objects.filter(owner=self.request.user).exists():
+                ctx["has_blog"] = True
+                ctx["blog"] = Blog.objects.get(owner=self.request.user)
         return ctx
 
 

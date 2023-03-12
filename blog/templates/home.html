@@ -4,7 +4,7 @@
 {% if not has_blog %}
 <li><a href="{% url 'new-blog' %}">Create New Blog</a></li>
 {% else %}
-<li><a href="{% url 'edit-blog' %}">Edit Blog Settings</a></li>
+<li><a href="{% url 'edit-blog' pk=blog.pk %}">Edit Blog Settings</a></li>
 {% endif %}
 {% endblock %}
 
