@@ -6,6 +6,9 @@
 {% else %}
 <li><a href="{% url 'edit-blog' pk=blog.pk %}">Edit Blog Settings</a></li>
 {% endif %}
+
+<li><a href="{% url 'new-blog-post' pk=blog.pk %}">Create New Blog Post</a></li>
+
 {% endblock %}
 
 
