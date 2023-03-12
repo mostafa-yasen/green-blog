@@ -1,3 +1,5 @@
+from django.forms import BaseModelForm
+from django.http import HttpResponse
 from django.http.response import HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse
 from django.utils.text import slugify
@@ -62,5 +64,9 @@ class NewBlogPost(CreateView):
     success_url = "/"
     model = BlogPost
 
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        blog_post = form.save(commit=False)
+        blog_post.blog = Blog.objects.get(owner=self.request.user)
+        blog_post.slug = slugify(blog_post.title)
+        blog_post.save()
+        return HttpResponseRedirect(reverse("home"))
